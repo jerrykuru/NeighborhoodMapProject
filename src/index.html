@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Neighborhood Map Project</title>
+    
+    <!-- build:css -->
+    <link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <!-- endbuild -->
+    <!-- build:js -->
+    <script src="app/require.config.js"></script>
+    <script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
+    
+    <!-- endbuild -->
+  </head>
+  
+  <body>
+    <div class="container-fluid" >
+      <div class="row " >
+        <div class="col-xs-6 col-md-4 collapse" id="exCollapsingNavbar">
+          <location-search></location-search>
+          <location-list></location-list>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8 ">
+         <app-menu></app-menu>
+         <location-map></location-map>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
