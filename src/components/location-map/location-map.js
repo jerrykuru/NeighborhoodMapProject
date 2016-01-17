@@ -4,20 +4,28 @@ import google from 'google-map-api';
 
 class LocationMapViewModel {
 	constructor() {
-		// console.log("locationMapTemplate", locationMapTemplate);
-		// console.log("map_canvas", $('#map_canvas')[0]);
-		// console.log("googe", window.google);
-		// console.log("document", document);
-		// console.log("window.google.maps", window.google.maps);
-		 var map = window.google.maps.Map(document.getElementById('map_canvas'), {
-			zoom: 5,
-			center: new window.google.maps.LatLng(55, 11),
-			mapTypeId: window.google.maps.MapTypeId.ROADMAP
+		
+		var myLatLng = {
+			lat: -25.363,
+			lng: 131.044
+		};
+
+		// Create a map object and specify the DOM element for display.
+		var map = new window.google.maps.Map(document.getElementById('map_canvas'), {
+			center: myLatLng,
+			scrollwheel: false,
+			zoom: 4
 		});
-		 console.log("map", map);
+
+		// Create a marker and set its position.
+		var marker = new window.google.maps.Marker({
+			map: map,
+			position: myLatLng,
+			title: 'Hello World!'
+		});
+
+		console.log(map);
 	}
-
-
 
 }
 
