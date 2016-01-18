@@ -11,7 +11,6 @@ class LocationListViewModel {
 	}
 
 	publishStation(bartStations) {
-		console.log("go",bartStations().length);
 		ko.shouter.notifySubscribers(bartStations, "stationListToPublish");
 	}
 
@@ -22,7 +21,7 @@ class LocationListViewModel {
 				var include = stationName.startsWith(newValue);
 				return !include;
 			});
-			this.publishStation();
+			this.publishStation(this.bartStations);
 		}, this, "stationLocationSearchMessageToPublish");
 	}
 
