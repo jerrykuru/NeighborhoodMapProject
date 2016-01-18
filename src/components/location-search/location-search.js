@@ -9,6 +9,8 @@ class LocationSearchViewModel {
 		// 	ko.shouter.notifySubscribers(newValue, "stationLocationSearchMessageToPublish");
 		// });
 	}
+	//This function is called from UI when the filter button is clicked.  
+	// the input value is published to the component "location-list" for further processing.
 	doSomething() {
 		ko.shouter.notifySubscribers(this.searchStation(), "filteredStationInSearch");
 	}

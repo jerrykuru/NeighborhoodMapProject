@@ -5,18 +5,22 @@ class LocationGoogleMapViewModel {
 
 	constructor() {
 
+
+       // Subsribe to first loading of all BART Stations, so the markers can be rendered on the page
 		ko.shouter.subscribe(function(bartStations) {
 			markers.forEach(this.clearAllMarkers);
 			bartStations().enableAnimationForMarker = false;
 			bartStations().forEach(this.addMarkerToMap);
 		}, this, "allStationList");
 
+      //Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
 		ko.shouter.subscribe(function(bartStations) {
 			markers.forEach(this.clearAllMarkers);
 			bartStations().enableAnimationForMarker = true;
 			bartStations().forEach(this.addMarkerToMap);
 		}, this, "filteredStation");
 
+       // Subsribe to the click event selection, to show the animation effect on the page
 		ko.shouter.subscribe(function(stationIndex) {
 			this.addAnimationForMarker(stationIndex);
 		}, this, "stationClicked");
