@@ -1,39 +1,31 @@
-# NeighborhoodMapProject
-NeighborhoodMapProject
 
-In Progress
+NeighborhoodMapProject  is a simple project that leverage knockoutjs library , google map API and Four Square Api with bootstrap to list BRAT Station on google map. The project leverages knockoutjs component to component interaction and local storage. Communication between components are using pub sub model .
 
-##
-  Please install sudo gem install -n /usr/local/bin sass
+ ## The project structures
 
-  http://sass-lang.com/guide
-  http://v4-alpha.getbootstrap.com/getting-started/introduction/
+  /Src 
+   / app 
+   / components 
+  / bower modules
 
-AIzaSyDDx5SksOhRVLAwWfXz2bSE0c5ybwwvOT4
-Key: udacity.neighborhood.com
+## Config 
+Under the app folder, the require.config.js , register all the dependency to be loaded 
+## Components 
+In the app folder, all the knockouts components are registered , there are four components 
 
-BootStrap 
- Icons -  http://getbootstrap.com/components/
- Nav&4 - http://v4-alpha.getbootstrap.com/components/navbar/?#containers
- Color - http://www.color-hex.com
- Media Query - https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries
- Sass Basic - http://sass-lang.com/guide
- Google API - https://developers.google.com/maps/documentation/javascript/get-api-key
- KnockOut - http://knockoutjs.com/documentation/with-binding.html
- Google Fonts - https://www.google.com/fonts
+ *  **location-google-map** - This component manages all google map related functions 
 
- API
- List of Stations - http://api.bart.gov/api/stn.aspx?cmd=stns&key=MW9S-E7SL-26DU-VV8V
- Station Detail - http://api.bart.gov/api/stn.aspx?cmd=stninfo&orig=ssan&key=MW9S-E7SL-26DU-VV8V
+ * **location-list**  - This component loads up the BART station list using FourSquar API’s.  The API response is persisted using local storage. The component renders the BART Station on the page. On clicking on a BART station, the Google Map Marker associated is highlighted with animation. 
 
- https://api.foursquare.com/v2/venues/search?client_id=I42W0CXRXTBJXQWBWOEPPKOL2B4ALPZ13ZFDEBHQPYWPYYBL&client_secret=5XHY3JAHXN4041DYGLZBBWNG0KZA20YVCJRQONOQZXGOOIVQ&v=20160115&ll=37.78,-122.41&query=BART Station
- 
+* **location-search** - The component will filter the BART location display in the list view as well as on the google maps.  
 
+## Install 
 
- http://www.wrapcode.com/knockoutjs/communication-between-multiple-view-models-in-knockoutjs-mvvm-the-right-approach/
- https://spring.io/understanding/javascript-modules
+   Bower package manager will install all the dependency for the project using the command 
+   **bower update** in the project folder
 
- https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
- https://developers.google.com/maps/documentation/javascript/events
+## Run
+  Run the Command  **gulp serve:dist** , which will launch the app at port http://localhost:8080 
 
-
+## Licience  
+   Free
