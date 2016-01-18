@@ -8,7 +8,6 @@ class LocationListViewModel {
 		this.calcArea(this.bartStations, this.publishStation);
 		this.filterList();
 		this.publishStation(this.bartStations);
-		this.selectedStation(null, this.bartStations);
 	}
 
 
@@ -34,6 +33,7 @@ class LocationListViewModel {
 		$.when(this.loadBratStationData()).then(
 			function(status) {
 				bartStations.push.apply(bartStations, status);
+				localStorage.stations = JSON.stringify(bartStations());
 				publishStation(bartStations);
 			},
 			function(status) {
@@ -60,9 +60,19 @@ class LocationListViewModel {
 	}
 
 	selectedStation(stationDetails) {
-		//todo find the correct index and publish
-		//ko.shouter.notifySubscribers(stationDetails, "stationClicked");
+		var stations = JSON.parse(localStorage.stations);
+		localStorage.selectedStationId = stationDetails.id;
+		console.log(Array.isArray(stations));
+		for (var index = 0; index < stations.length; index++) {
+			if (localStorage.selectedStationId === stations[index].id) {
+				ko.shouter.notifySubscribers(index, "stationClicked");
+				break;
+			}
+		}
+		 
 	}
+
+	
 
 }
 

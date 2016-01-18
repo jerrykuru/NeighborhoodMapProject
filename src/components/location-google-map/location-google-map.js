@@ -28,7 +28,10 @@ class LocationGoogleMapViewModel {
 	}
 
 	addAnimationForMarker(stationIndex) {
-		var marker = window.markers.indexOf(stationIndex);
+		var marker = window.markers[stationIndex];
+		var infowindow = new google.maps.InfoWindow({
+			content: name
+		});
 		marker.setAnimation(window.google.maps.Animation.BOUNCE);
 		infowindow.open(window.map, marker);
 	}
