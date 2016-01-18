@@ -6,17 +6,12 @@ import * as router from './router';
 
 
 // Components can be packaged as AMD modules, such as the following:
-ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
-ko.components.register('home-page', { require: 'components/home-page/home' });
 ko.components.register('location-search', { require: 'components/location-search/location-search' });
-ko.components.register('location-map', { require: 'components/location-map/location-map' });
 ko.components.register('location-list', { require: 'components/location-list/location-list' });
+ko.components.register('location-google-map', { require: 'components/location-google-map/location-google-map' });
 ko.shouter = new ko.subscribable();
 
 // ... or for template-only components, you can just point to a .html file directly:
-ko.components.register('about-page', {
-    template: { require: 'text!components/about-page/about.html' }
-});
 ko.components.register('app-menu', {
     template: { require: 'text!components/app-menu/app-menu.html' }
 });

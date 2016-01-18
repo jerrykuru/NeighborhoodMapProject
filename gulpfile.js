@@ -17,13 +17,10 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         },
         include: [
             'requireLib',
-            'components/nav-bar/nav-bar',
-            'components/home-page/home',
-            'text!components/about-page/about.html',
             'text!components/app-menu/app-menu.html',
             'components/location-list/location-list',
-            'components/location-map/location-map',
-            'components/location-search/location-search'
+            'components/location-search/location-search',
+            'components/location-google-map/location-google-map'
         ],
         insertRequire: ['app/startup'],
         bundles: {

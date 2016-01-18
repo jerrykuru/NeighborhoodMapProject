@@ -25,11 +25,23 @@
           <location-list></location-list>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-8 ">
-         <app-menu></app-menu>
-         <location-map></location-map>
+        <app-menu></app-menu>
+        <location-google-map></location-google-map>
+        <div class=" row embed-responsive embed-responsive-16by9">
+          <div id="map_canvas" class="embed-responsive-item" ></div>
         </div>
       </div>
     </div>
-     
- </body>
+  </div>
+  <script type="text/javascript">
+  var map;
+  function initMap() {
+  map = new google.maps.Map(document.getElementById('map_canvas'),
+  { center: {lat: 37.78, lng: -122.41},zoom: 10,mapTypeId: google.maps.MapTypeId.ROADMAP }
+  );
+  };
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDx5SksOhRVLAwWfXz2bSE0c5ybwwvOT4&callback=initMap"
+  type="text/javascript"></script>
+</body>
 </html>
