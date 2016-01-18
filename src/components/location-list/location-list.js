@@ -11,7 +11,6 @@ class LocationListViewModel {
 	}
 
 	publishStation(bartStations) {
-		console.log("going",bartStations().length);
 		ko.shouter.notifySubscribers(bartStations, "stationListToPublish");
 	}
 

@@ -4,8 +4,7 @@ import google from 'google-map-api';
 
 class LocationMapViewModel {
 	constructor() {
-        
-		this.markerList();
+      	this.markerList();
 	}
 
 	point(item, index, array) {
@@ -15,7 +14,6 @@ class LocationMapViewModel {
 			mapTypeId: window.google.maps.MapTypeId.ROADMAP
 		});
 
-		console.log("this.map", this.map);
 		var marker = new window.google.maps.Marker({
 			position: new window.google.maps.LatLng(item.location.lat, item.location.lng),
 			title: item.name,
@@ -30,7 +28,6 @@ class LocationMapViewModel {
 		ko.shouter.subscribe(function(bartStations) {
 			if (bartStations != undefined) {
 				bartStations().forEach(this.point);
-
 			}
 		}, this, "stationListToPublish");
 	}
