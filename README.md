@@ -11,7 +11,7 @@ NeighborhoodMapProject  is a simple project that leverage knockoutjs library , g
 ## Config 
 Under the app folder, the require.config.js , register all the dependency to be loaded 
 ## Components 
-In the app folder, all the knockouts components are registered , there are four components 
+In the app folder, all the knockouts components are registered , there are three components 
 
  *  **location-google-map** - This component manages all google map related functions 
 
