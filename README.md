@@ -27,7 +27,7 @@ In the app folder, all the knockouts components are registered , there are three
 ## Run
   Run the Command  **gulp serve:dist** , which will launch the app at port http://localhost:8080 
 
-## Licience  
+## Licence  
    Free
 ## Screen Shots 
 ![ScreenShot](https://raw.github.com/jerrykuru/NeighborhoodMapProject/master/img/one.png)
