@@ -1,5 +1,5 @@
 
-NeighborhoodMapProject  is a simple project that leverage knockoutjs library , google map API and Four Square Api with bootstrap to list BRAT Station on google map. The project leverages knockoutjs component to component interaction and local storage. Communication between components are using pub sub model .
+NeighborhoodMapProject  is a simple project that leverage knockoutjs library , google map API and Four Square Api with bootstrap to list BART Station on google map. The project leverages knockoutjs component to component interaction and local storage. Communication between components are using pub sub model .
 
  ## The project structures
 
