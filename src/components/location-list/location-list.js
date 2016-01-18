@@ -62,7 +62,6 @@ class LocationListViewModel {
 	selectedStation(stationDetails) {
 		var stations = JSON.parse(localStorage.stations);
 		localStorage.selectedStationId = stationDetails.id;
-		console.log(Array.isArray(stations));
 		for (var index = 0; index < stations.length; index++) {
 			if (localStorage.selectedStationId === stations[index].id) {
 				ko.shouter.notifySubscribers(index, "stationClicked");
