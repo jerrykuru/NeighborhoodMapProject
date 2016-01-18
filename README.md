@@ -30,7 +30,7 @@ In the app folder, all the knockouts components are registered , there are three
 ## Licience  
    Free
 ## Screen Shots 
-![ScreenShot](https://raw.github.com/{jerrykuru}/{NeighborhoodMapProject}/{master}/{img}/one.png)
-![ScreenShot](https://raw.github.com/{jerrykuru}/{NeighborhoodMapProject}/{master}/{img}/two.png)
-![ScreenShot](https://raw.github.com/{jerrykuru}/{NeighborhoodMapProject}/{master}/{img}/three.png)
-![ScreenShot](https://raw.github.com/{jerrykuru}/{NeighborhoodMapProject}/{master}/{img}/four.png)
+![ScreenShot](https://raw.github.com/jerrykuru/NeighborhoodMapProject/master/img/one.png)
+![ScreenShot](https://raw.github.com/jerrykuru/NeighborhoodMapProject/master/img/two.png)
+![ScreenShot](https://raw.github.com/jerrykuru/NeighborhoodMapProject/master/img/three.png)
+![ScreenShot](https://raw.github.com/jerrykuru/NeighborhoodMapProject/master/img/four.png)
