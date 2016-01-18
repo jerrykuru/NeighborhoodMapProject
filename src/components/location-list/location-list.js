@@ -5,13 +5,18 @@ class LocationListViewModel {
 
 	constructor() {
 		this.bartStations = ko.observableArray();
-		this.calcArea(this.bartStations,this.publishStation);
+		this.calcArea(this.bartStations, this.publishStation);
 		this.filterList();
 		this.publishStation(this.bartStations);
+		this.selectedStation(null, this.bartStations);
 	}
 
+
 	publishStation(bartStations) {
-		ko.shouter.notifySubscribers(bartStations, "stationListToPublish");
+		ko.shouter.notifySubscribers(bartStations, "allStationList");
+	}
+	publishFiltredStation(bartStations) {
+		ko.shouter.notifySubscribers(bartStations, "filteredStation");
 	}
 
 	filterList() {
@@ -21,11 +26,11 @@ class LocationListViewModel {
 				var include = stationName.startsWith(newValue);
 				return !include;
 			});
-			this.publishStation(this.bartStations);
-		}, this, "stationLocationSearchMessageToPublish");
+			this.publishFiltredStation(this.bartStations);
+		}, this, "filteredStationInSearch");
 	}
 
-	calcArea(bartStations,publishStation) {
+	calcArea(bartStations, publishStation) {
 		$.when(this.loadBratStationData()).then(
 			function(status) {
 				bartStations.push.apply(bartStations, status);
@@ -54,8 +59,10 @@ class LocationListViewModel {
 		return dfd.promise();
 	}
 
-	
-
+	selectedStation(stationDetails) {
+		//todo find the correct index and publish
+		//ko.shouter.notifySubscribers(stationDetails, "stationClicked");
+	}
 
 }
 

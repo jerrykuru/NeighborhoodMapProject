@@ -10,7 +10,7 @@ class LocationSearchViewModel {
 		// });
 	}
 	doSomething() {
-		ko.shouter.notifySubscribers(this.searchStation(), "stationLocationSearchMessageToPublish");
+		ko.shouter.notifySubscribers(this.searchStation(), "filteredStationInSearch");
 	}
 }
 

@@ -33,4 +33,7 @@ BootStrap
  http://www.wrapcode.com/knockoutjs/communication-between-multiple-view-models-in-knockoutjs-mvvm-the-right-approach/
  https://spring.io/understanding/javascript-modules
 
+ https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
+ https://developers.google.com/maps/documentation/javascript/events
+
 
