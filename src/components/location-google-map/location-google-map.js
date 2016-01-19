@@ -33,8 +33,10 @@ class LocationGoogleMapViewModel {
 
 	addAnimationForMarker(stationIndex) {
 		var marker = markers[stationIndex];
+		var stations = JSON.parse(localStorage.stations);
+		var nameOfStation =  stations[stationIndex].name;
 		var infowindow = new google.maps.InfoWindow({
-			content: name
+			content: nameOfStation
 		});
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 		infowindow.open(map, marker);
