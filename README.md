@@ -21,7 +21,9 @@ In the app folder, all the knockouts components are registered , there are three
 
 ## Install 
 
-   Bower package manager will install all the dependency for the project using the command 
+   * Install all Require Node Modules **npm install**
+
+   * Bower package manager will install all the dependency for the project using the command 
    **bower update** in the project folder
 
 ## Run
