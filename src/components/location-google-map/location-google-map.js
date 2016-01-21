@@ -47,12 +47,13 @@ class LocationGoogleMapViewModel {
 
 	// Add the markers to the page/map
 	addAnimationForMarker(stationIndex) {
-		if(localStorage.currentClickedStationIndex != undefined){
-			console.log("localStorage.currentClickedStationIndex",localStorage.currentClickedStationIndex);
+		if (localStorage.currentClickedStationIndex != undefined) {
 			Oldmarker = markers[localStorage.currentClickedStationIndex];
 			Oldmarker.setAnimation(null);
-			console.log(Oldmarker.infoWindow);
-		//	Oldmarker.infoWindow.close();
+			if (openedInfoWindow != null) {
+				openedInfoWindow.close();
+			}
+			//	Oldmarker.infoWindow.close();
 		}
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
@@ -60,10 +61,11 @@ class LocationGoogleMapViewModel {
 		var infowindow = new google.maps.InfoWindow({
 			content: nameOfStation
 		});
-		
+
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 		localStorage.currentClickedStationIndex = stationIndex;
 		infowindow.open(map, marker);
+		openedInfoWindow = infowindow;
 	}
 
 	addMarkerToMap(item, index, stationList) {
@@ -87,6 +89,7 @@ class LocationGoogleMapViewModel {
 			} else {
 				marker.setAnimation(google.maps.Animation.BOUNCE);
 				infowindow.open(map, marker);
+				openedInfoWindow = infowindow;
 			}
 		}.bind(this));
 
@@ -94,8 +97,8 @@ class LocationGoogleMapViewModel {
 			marker.setAnimation(google.maps.Animation.BOUNCE);
 			infowindow.open(map, marker);
 		};
-         
-       markers.push(marker);
+
+		markers.push(marker);
 
 	}
 

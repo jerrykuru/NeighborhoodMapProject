@@ -36,7 +36,7 @@
   <script type="text/javascript">
   var map;
   var markers = [];
-  
+  var openedInfoWindow = null;
   function initMap() {
   map = new google.maps.Map(document.getElementById('map_canvas'),
   { center: {lat: 37.78, lng: -122.41},zoom: 10,mapTypeId: google.maps.MapTypeId.ROADMAP }
