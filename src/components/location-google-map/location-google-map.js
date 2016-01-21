@@ -3,28 +3,40 @@ import locationGoogleMapTemplate from 'text!./location-google-map.html';
 
 class LocationGoogleMapViewModel {
 
+
 	constructor() {
 
 
-       // Subsribe to first loading of all BART Stations, so the markers can be rendered on the page
+		// Subsribe to first loading of all BART Stations, so the markers can be rendered on the page
+		// Added timeout to ensure that google maps were laoded, this is tech debt. 
 		ko.shouter.subscribe(function(bartStations) {
-			markers.forEach(this.clearAllMarkers);
-			bartStations().enableAnimationForMarker = false;
-			bartStations().forEach(this.addMarkerToMap);
+			googleMVContext={};
+			googleMVContext.addMarkerToMap = this.addMarkerToMap;
+			googleMVContext.clearAllMarkers =  this.clearAllMarkers;
+			googleMVContext.bartStations = bartStations;
+			this.processBartStations.bind(googleMVContext);
+			setTimeout(this.processBartStations, 1000)
 		}, this, "allStationList");
 
-      //Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
+		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
 		ko.shouter.subscribe(function(bartStations) {
 			markers.forEach(this.clearAllMarkers);
 			bartStations().enableAnimationForMarker = true;
 			bartStations().forEach(this.addMarkerToMap);
 		}, this, "filteredStation");
 
-       // Subsribe to the click event selection, to show the animation effect on the page
+		// Subsribe to the click event selection, to show the animation effect on the page
 		ko.shouter.subscribe(function(stationIndex) {
-			this.addAnimationForMarker(stationIndex);
+				this.addAnimationForMarker(stationIndex);
 		}, this, "stationClicked");
 
+	}
+
+	processBartStations() {
+		bartStations = googleMVContext.bartStations;
+		markers.forEach(googleMVContext.clearAllMarkers);
+		bartStations().enableAnimationForMarker = false;
+		bartStations().forEach(googleMVContext.addMarkerToMap);
 	}
 
 	clearAllMarkers(item, index, array) {
@@ -34,7 +46,7 @@ class LocationGoogleMapViewModel {
 	addAnimationForMarker(stationIndex) {
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
-		var nameOfStation =  stations[stationIndex].name;
+		var nameOfStation = stations[stationIndex].name;
 		var infowindow = new google.maps.InfoWindow({
 			content: nameOfStation
 		});
@@ -46,6 +58,7 @@ class LocationGoogleMapViewModel {
 		this.name = item.name;
 		this.lat = ko.observable(item.location.lat);
 		this.long = ko.observable(item.location.lng);
+		//	console.log("google",google);
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(item.location.lat, item.location.lng),
 			title: name,
