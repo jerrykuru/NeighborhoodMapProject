@@ -10,9 +10,9 @@ class LocationGoogleMapViewModel {
 		// Subsribe to first loading of all BART Stations, so the markers can be rendered on the page
 		// Added timeout to ensure that google maps were laoded, this is tech debt. 
 		ko.shouter.subscribe(function(bartStations) {
-			googleMVContext={};
+			googleMVContext = {};
 			googleMVContext.addMarkerToMap = this.addMarkerToMap;
-			googleMVContext.clearAllMarkers =  this.clearAllMarkers;
+			googleMVContext.clearAllMarkers = this.clearAllMarkers;
 			googleMVContext.bartStations = bartStations;
 			this.processBartStations.bind(googleMVContext);
 			setTimeout(this.processBartStations, 1000)
@@ -27,7 +27,7 @@ class LocationGoogleMapViewModel {
 
 		// Subsribe to the click event selection, to show the animation effect on the page
 		ko.shouter.subscribe(function(stationIndex) {
-				this.addAnimationForMarker(stationIndex);
+			this.addAnimationForMarker(stationIndex);
 		}, this, "stationClicked");
 
 	}
@@ -58,7 +58,6 @@ class LocationGoogleMapViewModel {
 		this.name = item.name;
 		this.lat = ko.observable(item.location.lat);
 		this.long = ko.observable(item.location.lng);
-		//	console.log("google",google);
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(item.location.lat, item.location.lng),
 			title: name,
