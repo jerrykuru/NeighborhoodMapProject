@@ -60,12 +60,6 @@ class LocationListViewModel {
 		var url = 'http://api.foursquare.com/v2/venues/search?client_id=I42W0CXRXTBJXQWBWOEPPKOL2B4ALPZ13ZFDEBHQPYWPYYBL&client_secret=5XHY3JAHXN4041DYGLZBBWNG0KZA20YVCJRQONOQZXGOOIVQ&v=20160115&ll=37.78,-122.41&query=BART Station';
 
 		var dfd = jQuery.Deferred();
-		// $.getJSON(url, function(data) {
-		// 	var stations = data.response.venues;
-		// 	dfd.resolve(stations);
-		// }).fail(function(e) {
-		// 	dfd.reject(e);
-		// });
 
 		$.ajax({
 			type: "POST",
@@ -74,6 +68,10 @@ class LocationListViewModel {
 			success: function(data) {
 				var stations = data.response.venues;
 				dfd.resolve(stations);
+			},
+			error: function(request, status, error) {
+				var stations = [];
+				dfd.reject(stations);
 			}
 		});
 		return dfd.promise();

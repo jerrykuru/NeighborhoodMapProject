@@ -32,7 +32,7 @@ class LocationGoogleMapViewModel {
 
 	}
 
-   //This function is on a timer to ensure that google is loaded in the browser prior to this function getting executed.
+	//This function is on a timer to ensure that google is loaded in the browser prior to this function getting executed.
 	processBartStations() {
 		bartStations = googleMVContext.bartStations;
 		markers.forEach(googleMVContext.clearAllMarkers);
@@ -40,20 +40,29 @@ class LocationGoogleMapViewModel {
 		bartStations().forEach(googleMVContext.addMarkerToMap);
 	}
 
-    //Remove all the markers from the page/map
+	//Remove all the markers from the page/map
 	clearAllMarkers(item, index, array) {
 		markers[index].setMap(null);
 	}
 
-    // Add the markers to the page/map
+	// Add the markers to the page/map
 	addAnimationForMarker(stationIndex) {
+		if(localStorage.currentClickedStationIndex != undefined){
+			console.log("localStorage.currentClickedStationIndex",localStorage.currentClickedStationIndex);
+			Oldmarker = markers[localStorage.currentClickedStationIndex];
+			Oldmarker.setAnimation(null);
+			console.log(Oldmarker.infoWindow);
+		//	Oldmarker.infoWindow.close();
+		}
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
 		var nameOfStation = stations[stationIndex].name;
 		var infowindow = new google.maps.InfoWindow({
 			content: nameOfStation
 		});
+		
 		marker.setAnimation(google.maps.Animation.BOUNCE);
+		localStorage.currentClickedStationIndex = stationIndex;
 		infowindow.open(map, marker);
 	}
 
@@ -85,8 +94,8 @@ class LocationGoogleMapViewModel {
 			marker.setAnimation(google.maps.Animation.BOUNCE);
 			infowindow.open(map, marker);
 		};
-
-		markers.push(marker);
+         
+       markers.push(marker);
 
 	}
 
