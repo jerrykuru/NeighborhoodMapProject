@@ -32,6 +32,7 @@ class LocationGoogleMapViewModel {
 
 	}
 
+   //This function is on a timer to ensure that google is loaded in the browser prior to this function getting executed.
 	processBartStations() {
 		bartStations = googleMVContext.bartStations;
 		markers.forEach(googleMVContext.clearAllMarkers);
@@ -39,10 +40,12 @@ class LocationGoogleMapViewModel {
 		bartStations().forEach(googleMVContext.addMarkerToMap);
 	}
 
+    //Remove all the markers from the page/map
 	clearAllMarkers(item, index, array) {
 		markers[index].setMap(null);
 	}
 
+    // Add the markers to the page/map
 	addAnimationForMarker(stationIndex) {
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
