@@ -6,7 +6,6 @@ class LocationGoogleMapViewModel {
 
 	constructor() {
 
-
 		// Subsribe to first loading of all BART Stations, so the markers can be rendered on the page
 		// Added timeout to ensure that google maps were laoded, this is tech debt. 
 		ko.shouter.subscribe(function(bartStations) {
@@ -86,6 +85,9 @@ class LocationGoogleMapViewModel {
 		google.maps.event.addListener(marker, 'click', function() {
 			if (marker.getAnimation() !== null) {
 				marker.setAnimation(null);
+				if (openedInfoWindow != null) {
+					openedInfoWindow.close();
+				}
 			} else {
 				marker.setAnimation(google.maps.Animation.BOUNCE);
 				infowindow.open(map, marker);

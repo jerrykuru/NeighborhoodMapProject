@@ -27,12 +27,23 @@ class LocationListViewModel {
 	// one the page
 	filterList() {
 		ko.shouter.subscribe(function(newValue) {
-			this.bartStations.remove(function(item) {
-				var stationName = item.name;
-				var include = stationName.startsWith(newValue);
-				return !include;
-			});
-			this.publishFiltredStation(this.bartStations);
+			console.log("newValue.length", newValue.length);
+			console.log("this.bartStations().length", this.bartStations().length);
+			if ((newValue.length == 0) &&
+				(this.bartStations().length < 2)) {
+				this.bartStations().pop();
+				console.log("i am zero");
+				var stations = JSON.parse(localStorage.stations);
+				this.bartStations().push.apply(bartStations(), stations);
+			} else {
+				this.bartStations.remove(function(item) {
+					var stationName = item.name;
+					var include = stationName.startsWith(newValue);
+					return !include;
+				});
+				this.publishFiltredStation(this.bartStations);
+			}
+
 		}, this, "filteredStationInSearch");
 	}
 
