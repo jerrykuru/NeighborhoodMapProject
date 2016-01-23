@@ -10,17 +10,16 @@ class LocationGoogleMapViewModel {
 		// Added timeout to ensure that google maps were laoded, this is tech debt. 
 		ko.shouter.subscribe(function(bartStations) {
 			googleMVContext = {};
-			googleMVContext.addMarkerToMap = this.addMarkerToMap;
 			googleMVContext.clearAllMarkers = this.clearAllMarkers;
 			googleMVContext.bartStations = bartStations;
+			googleMVContext.addMarkerToMap = this.addMarkerToMap;
 			this.processBartStations.bind(googleMVContext);
-			setTimeout(this.processBartStations, 2500)
+			setTimeout(this.processBartStations, 1500)
 		}, this, "allStationList");
 
 		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
 		ko.shouter.subscribe(function(bartStations) {
 			markers.forEach(this.clearAllMarkers);
-			bartStations().enableAnimationForMarker = true;
 			bartStations().forEach(this.addMarkerToMap);
 		}, this, "filteredStation");
 
@@ -35,7 +34,6 @@ class LocationGoogleMapViewModel {
 	processBartStations() {
 		bartStations = googleMVContext.bartStations;
 		markers.forEach(googleMVContext.clearAllMarkers);
-		bartStations.enableAnimationForMarker = false;
 		bartStations.forEach(googleMVContext.addMarkerToMap);
 	}
 
@@ -52,7 +50,7 @@ class LocationGoogleMapViewModel {
 			if (openedInfoWindow != null) {
 				openedInfoWindow.close();
 			}
-			//	Oldmarker.infoWindow.close();
+			
 		}
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
@@ -101,9 +99,14 @@ class LocationGoogleMapViewModel {
 			}
 		}.bind(this));
 
-		if (stationList.enableAnimationForMarker) {
-			marker.setAnimation(google.maps.Animation.BOUNCE);
-			infowindow.open(map, marker);
+		if (item.enableAnimationForMarker != undefined) {
+			if (item.enableAnimationForMarker) {
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+				infowindow.open(map, marker);
+				window.setTimeout(function() {
+					marker.setAnimation(null);
+				}, 1000);
+			};
 		};
 
 		markers.push(marker);

@@ -8,11 +8,15 @@ class LocationListViewModel {
 		this.loadBartStation(this.bartStations, this.publishStation);
 		this.filterList();
 		this.publishStation(this.bartStations);
-		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
+		//Refresh the list of BART Stations if the user make the search input box empty
 		ko.shouter.subscribe(function(stations) {
 			this.bartStations.removeAll();
-			this.bartStations().push.apply(this.bartStations(), stations);
-			ko.shouter.notifySubscribers(bartStations, "allStationList");
+			var stationsobservableArray = this.bartStations;
+			stationsobservableArray().push.apply(stationsobservableArray(),stations);
+			this.bartStations = stationsobservableArray;
+			// Had to do this to trigger the observal of Array
+			this.bartStations.push(stations[0]);
+			ko.shouter.notifySubscribers(this.bartStations(), "allStationList");
 		}, this, "allStationListRefresh");
 
 	}
@@ -37,11 +41,11 @@ class LocationListViewModel {
 			if (newValue.length === 0)  {
 				this.bartStations.removeAll();
 				var stations = JSON.parse(localStorage.stations);
-				console.log("this.bartStations.length", this.bartStations.length);
-		
-				this.bartStations().push.apply(this.bartStations(), stations);
+				this.bartStations.push.apply(this.bartStations(), stations);
 			} else {
+
 				this.bartStations.remove(function(item) {
+					item.enableAnimationForMarker =  true;
 					var stationName = item.name;
 					var include = stationName.startsWith(newValue);
 					return !include;
