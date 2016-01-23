@@ -101,6 +101,7 @@ class LocationListViewModel {
 	// full list of BART Station is extracted from localstorage and iterated to find the index
 	// Once the index is found for the clicked event, the index is published for the location-google-map component to consume. 
 	selectedStation(stationDetails) {
+		$('button[data-toggle]').click();
 		var stations = JSON.parse(localStorage.stations);
 		localStorage.selectedStationId = stationDetails.id;
 		for (var index = 0; index < stations.length; index++) {
