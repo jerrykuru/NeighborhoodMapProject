@@ -9,9 +9,12 @@ class LocationSearchViewModel {
 	constructor() {
 		this.searchStation = ko.observable(stationPlaceholder);
 		this.searchStation.subscribe(function(newValue) {
-			console.log("newValue", newValue);
-			console.log("newValue.length", newValue.length);
-			ko.shouter.notifySubscribers(newValue, "filteredStationInSearch");
+			if (newValue.length === 0) {
+				var bartStations = JSON.parse(localStorage.stations);
+				ko.shouter.notifySubscribers(bartStations, "allStationListRefresh");
+			} else {
+				ko.shouter.notifySubscribers(newValue, "filteredStationInSearch");
+			}
 		});
 
 	}

@@ -8,6 +8,13 @@ class LocationListViewModel {
 		this.loadBartStation(this.bartStations, this.publishStation);
 		this.filterList();
 		this.publishStation(this.bartStations);
+		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
+		ko.shouter.subscribe(function(stations) {
+			this.bartStations.removeAll();
+			this.bartStations().push.apply(this.bartStations(), stations);
+			ko.shouter.notifySubscribers(bartStations, "allStationList");
+		}, this, "allStationListRefresh");
+
 	}
 
 	//Publish the list of station for the component "location-google-map " to subscribe 
@@ -27,14 +34,12 @@ class LocationListViewModel {
 	// one the page
 	filterList() {
 		ko.shouter.subscribe(function(newValue) {
-			console.log("newValue.length", newValue.length);
-			console.log("this.bartStations().length", this.bartStations().length);
-			if ((newValue.length == 0) &&
-				(this.bartStations().length < 2)) {
-				this.bartStations().pop();
-				console.log("i am zero");
+			if (newValue.length === 0)  {
+				this.bartStations.removeAll();
 				var stations = JSON.parse(localStorage.stations);
-				this.bartStations().push.apply(bartStations(), stations);
+				console.log("this.bartStations.length", this.bartStations.length);
+		
+				this.bartStations().push.apply(this.bartStations(), stations);
 			} else {
 				this.bartStations.remove(function(item) {
 					var stationName = item.name;
@@ -54,7 +59,7 @@ class LocationListViewModel {
 				bartStations.push.apply(bartStations, status);
 				//store the resultset to local storage
 				localStorage.stations = JSON.stringify(bartStations());
-				publishStation(bartStations);
+				publishStation(bartStations());
 			},
 			function(status) {
 				console.log(" you fail this time");

@@ -14,7 +14,7 @@ class LocationGoogleMapViewModel {
 			googleMVContext.clearAllMarkers = this.clearAllMarkers;
 			googleMVContext.bartStations = bartStations;
 			this.processBartStations.bind(googleMVContext);
-			setTimeout(this.processBartStations, 500)
+			setTimeout(this.processBartStations, 2500)
 		}, this, "allStationList");
 
 		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
@@ -35,8 +35,8 @@ class LocationGoogleMapViewModel {
 	processBartStations() {
 		bartStations = googleMVContext.bartStations;
 		markers.forEach(googleMVContext.clearAllMarkers);
-		bartStations().enableAnimationForMarker = false;
-		bartStations().forEach(googleMVContext.addMarkerToMap);
+		bartStations.enableAnimationForMarker = false;
+		bartStations.forEach(googleMVContext.addMarkerToMap);
 	}
 
 	//Remove all the markers from the page/map
@@ -62,6 +62,9 @@ class LocationGoogleMapViewModel {
 		});
 
 		marker.setAnimation(google.maps.Animation.BOUNCE);
+		window.setTimeout(function() {
+			marker.setAnimation(null);
+		}, 300);
 		localStorage.currentClickedStationIndex = stationIndex;
 		infowindow.open(map, marker);
 		openedInfoWindow = infowindow;
@@ -91,6 +94,9 @@ class LocationGoogleMapViewModel {
 			} else {
 				marker.setAnimation(google.maps.Animation.BOUNCE);
 				infowindow.open(map, marker);
+				window.setTimeout(function() {
+					marker.setAnimation(null);
+				}, 300);
 				openedInfoWindow = infowindow;
 			}
 		}.bind(this));
