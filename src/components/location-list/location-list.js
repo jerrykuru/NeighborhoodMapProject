@@ -18,6 +18,11 @@ class LocationListViewModel {
 			this.bartStations.push(stations[0]);
 			ko.shouter.notifySubscribers(this.bartStations(), "allStationList");
 		}, this, "allStationListRefresh");
+	
+	   //hide the list view when a user clicks on a location
+		ko.shouter.subscribe(function() {
+			$('button[data-toggle]').click();
+    	}, this, "hideListView");
 
 	}
 
@@ -45,7 +50,7 @@ class LocationListViewModel {
 			} else {
 
 				this.bartStations.remove(function(item) {
-					item.enableAnimationForMarker =  true;
+				//	item.enableAnimationForMarker =  true;
 					var stationName = item.name;
 					var include = stationName.startsWith(newValue);
 					return !include;
@@ -101,7 +106,6 @@ class LocationListViewModel {
 	// full list of BART Station is extracted from localstorage and iterated to find the index
 	// Once the index is found for the clicked event, the index is published for the location-google-map component to consume. 
 	selectedStation(stationDetails) {
-		$('button[data-toggle]').click();
 		var stations = JSON.parse(localStorage.stations);
 		localStorage.selectedStationId = stationDetails.id;
 		for (var index = 0; index < stations.length; index++) {

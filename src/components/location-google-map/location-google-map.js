@@ -14,7 +14,7 @@ class LocationGoogleMapViewModel {
 			googleMVContext.bartStations = bartStations;
 			googleMVContext.addMarkerToMap = this.addMarkerToMap;
 			this.processBartStations.bind(googleMVContext);
-			setTimeout(this.processBartStations, 1500)
+			setTimeout(this.processBartStations, 1000)
 		}, this, "allStationList");
 
 		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
@@ -26,6 +26,7 @@ class LocationGoogleMapViewModel {
 		// Subsribe to the click event selection, to show the animation effect on the page
 		ko.shouter.subscribe(function(stationIndex) {
 			this.addAnimationForMarker(stationIndex);
+			ko.shouter.notifySubscribers({}, "hideListView");
 		}, this, "stationClicked");
 
 	}
@@ -47,10 +48,9 @@ class LocationGoogleMapViewModel {
 		if (localStorage.currentClickedStationIndex != undefined) {
 			Oldmarker = markers[localStorage.currentClickedStationIndex];
 			Oldmarker.setAnimation(null);
-			if (openedInfoWindow != null) {
+		}
+		if (openedInfoWindow != null) {
 				openedInfoWindow.close();
-			}
-			
 		}
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
@@ -94,7 +94,7 @@ class LocationGoogleMapViewModel {
 				infowindow.open(map, marker);
 				window.setTimeout(function() {
 					marker.setAnimation(null);
-				}, 300);
+				}, 700);
 				openedInfoWindow = infowindow;
 			}
 		}.bind(this));
