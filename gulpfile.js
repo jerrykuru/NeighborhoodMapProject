@@ -4,7 +4,7 @@ var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = r
 // Gulp and plugins
 var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = require('gulp-concat'), clean = require('gulp-clean'), filter = require('gulp-filter'),
     replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace'),
-    connect = require('gulp-connect'), babelCore = require('babel-core'), babel = require('gulp-babel'), objectAssign = require('object-assign');
+    connect = require('gulp-connect'), babelCore = require('babel-core'), babel = require('gulp-babel'), objectAssign = require('object-assign'), slash = require('slash');
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;'),
@@ -47,7 +47,8 @@ gulp.task('js:babel', function() {
     return gulp.src(requireJsOptimizerConfig.baseUrl + '/**')
         .pipe(es.map(function(data, cb) {
             if (!data.isNull()) {
-                babelTranspile(data.relative, function(err, res) {
+                pathnameSlash = slash(data.relative);
+                babelTranspile(pathnameSlash, function(err, res) {
                     if (res) {
                         data.contents = new Buffer(res.code);
                     }
