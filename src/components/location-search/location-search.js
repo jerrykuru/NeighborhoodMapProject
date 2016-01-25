@@ -12,6 +12,9 @@ class LocationSearchViewModel {
 			if (newValue.length === 0) {
 				var bartStations = JSON.parse(localStorage.stations);
 				ko.shouter.notifySubscribers(bartStations, "allStationListRefresh");
+			} else if (newValue === "BART") {
+				var bartStations = JSON.parse(localStorage.stations);
+				ko.shouter.notifySubscribers(bartStations, "allStationListRefresh");
 			} else {
 				ko.shouter.notifySubscribers(newValue, "filteredStationInSearch");
 			}
