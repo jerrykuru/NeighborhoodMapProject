@@ -43,22 +43,20 @@ class LocationListViewModel {
 	// one the page
 	filterList() {
 		ko.shouter.subscribe(function(newValue) {
-			if (newValue.length === 0) {
-				this.bartStations.removeAll();
-				var stations = JSON.parse(localStorage.stations);
-				this.bartStations.push.apply(this.bartStations(), stations);
-			} else {
-              //Iterating over the stations , convert the search string to lowercase , 
-              //convert the station in the collection to lower case. Any hit will be included in the list view. 
-				this.bartStations.remove(function(item) {
-					var stationName = item.name;
-					var newValueLowerCase = newValue.toLocaleLowerCase();
-					var lowerCaseCompare = stationName.toLocaleLowerCase().indexOf(newValueLowerCase);
-					var finalResult = (lowerCaseCompare > -1) ;
-					return !finalResult;
-				});
-				this.publishFiltredStation(this.bartStations);
-			}
+			this.bartStations.removeAll();
+			var stations = JSON.parse(localStorage.stations);
+			this.bartStations().push.apply(this.bartStations(), stations);
+			//Iterating over the stations , convert the search string to lowercase , 
+			//convert the station in the collection to lower case. Any hit will be included in the list view. 
+			this.bartStations.remove(function(item) {
+				var stationName = item.name;
+				var newValueLowerCase = newValue.toLocaleLowerCase();
+				var lowerCaseCompare = stationName.toLocaleLowerCase().indexOf(newValueLowerCase);
+				var finalResult = (lowerCaseCompare > -1);
+				return !finalResult;
+			});
+			this.publishFiltredStation(this.bartStations);
+
 
 		}, this, "filteredStationInSearch");
 	}
