@@ -13,7 +13,6 @@ class LocationSearchViewModel {
 				var bartStations = JSON.parse(localStorage.stations);
 				ko.shouter.notifySubscribers(bartStations, "allStationListRefresh");
 			} else {
-				console.log("newValue", newValue);
 				ko.shouter.notifySubscribers(newValue, "filteredStationInSearch");
 			}
 		}, this);
