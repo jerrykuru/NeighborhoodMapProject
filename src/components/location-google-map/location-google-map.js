@@ -5,6 +5,36 @@ class LocationGoogleMapViewModel {
 
 
 	constructor() {
+		this.percentage = ko.observable(0);
+        this.timeoutID = this.timer(this.percentage);
+		this.percentage.subscribe(function(value) {
+			if (parseInt(value) === 100) {
+				clearTimeout(this.timeoutID);
+			}
+		},this);
+
+		ko.bindingHandlers.progressBar = {
+			init: function(element) {
+				return {
+					controlsDescendantBindings: true
+				};
+			},
+			update: function(element, valueAccessor, bindingContext) {
+				var options = ko.unwrap(valueAccessor());
+
+				var value = options.value();
+
+				var width = value + "%";
+
+				$(element).addClass("progressBar");
+
+				ko.applyBindingsToNode(element, {
+					html: '<div data-bind="style: { width: \'' + width + '\' }"></div><div class="progressText" data-bind="text: \'' + value + ' %\'"></div>'
+				});
+
+				ko.applyBindingsToDescendants(bindingContext, element);
+			}
+		};
 
 		// Subsribe to first loading of all BART Stations, so the markers can be rendered on the page
 		// Added timeout to ensure that google maps were laoded, this is tech debt. 
@@ -14,7 +44,8 @@ class LocationGoogleMapViewModel {
 			googleMVContext.bartStations = bartStations;
 			googleMVContext.addMarkerToMap = this.addMarkerToMap;
 			this.processBartStations.bind(googleMVContext);
-			setTimeout(this.processBartStations, 1000)
+			googleMVContext.googleErrorMsg = this.googleErrorMsg;
+			setTimeout(this.processBartStations, 1)
 		}, this, "allStationList");
 
 		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
@@ -50,7 +81,7 @@ class LocationGoogleMapViewModel {
 			Oldmarker.setAnimation(null);
 		}
 		if (openedInfoWindow != null) {
-				openedInfoWindow.close();
+			openedInfoWindow.close();
 		}
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
@@ -113,7 +144,13 @@ class LocationGoogleMapViewModel {
 
 	}
 
+	timer(percentage) {
+		timeoutID = setInterval(function() {
+			percentage(percentage() + 1);
+		}, 50);
 
+		return timeoutID;
+	}
 
 }
 

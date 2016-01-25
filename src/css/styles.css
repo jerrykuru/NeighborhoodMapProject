@@ -38,6 +38,31 @@ border-left-width: 2px;
 padding-left: 2px;
 }
 
+.progressBar {
+  position: relative;
+  width: 95%;
+  height: 50px;
+  margin: 20px auto;
+  border: 3px solid #fab617;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progressBar div {
+  position: relative;
+  height: 100%;
+  background-color: #fab617;
+}
+
+.progressBar .progressText {
+  position: absolute;
+  margin: 0 auto;
+  top: 12px;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+}
+
 @media all and (min-width: 960px) {
 html body{
 font-size: 12px;
