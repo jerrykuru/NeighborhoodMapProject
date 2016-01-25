@@ -12,17 +12,17 @@ class LocationListViewModel {
 		ko.shouter.subscribe(function(stations) {
 			this.bartStations.removeAll();
 			var stationsobservableArray = this.bartStations;
-			stationsobservableArray().push.apply(stationsobservableArray(),stations);
+			stationsobservableArray().push.apply(stationsobservableArray(), stations);
 			this.bartStations = stationsobservableArray;
 			// Had to do this to trigger the observal of Array
 			this.bartStations.push(stations[0]);
 			ko.shouter.notifySubscribers(this.bartStations(), "allStationList");
 		}, this, "allStationListRefresh");
-	
-	   //hide the list view when a user clicks on a location
+
+		//hide the list view when a user clicks on a location
 		ko.shouter.subscribe(function() {
 			$('button[data-toggle]').click();
-    	}, this, "hideListView");
+		}, this, "hideListView");
 
 	}
 
@@ -43,17 +43,19 @@ class LocationListViewModel {
 	// one the page
 	filterList() {
 		ko.shouter.subscribe(function(newValue) {
-			if (newValue.length === 0)  {
+			if (newValue.length === 0) {
 				this.bartStations.removeAll();
 				var stations = JSON.parse(localStorage.stations);
 				this.bartStations.push.apply(this.bartStations(), stations);
 			} else {
-
+              //Iterating over the stations , convert the search string to lowercase , 
+              //convert the station in the collection to lower case. Any hit will be included in the list view. 
 				this.bartStations.remove(function(item) {
-				//	item.enableAnimationForMarker =  true;
 					var stationName = item.name;
-					var include = stationName.startsWith(newValue);
-					return !include;
+					var newValueLowerCase = newValue.toLocaleLowerCase();
+					var lowerCaseCompare = stationName.toLocaleLowerCase().indexOf(newValueLowerCase);
+					var finalResult = (lowerCaseCompare > -1) ;
+					return !finalResult;
 				});
 				this.publishFiltredStation(this.bartStations);
 			}
