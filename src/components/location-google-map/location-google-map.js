@@ -18,7 +18,7 @@ class LocationGoogleMapViewModel {
 			googleMVContext.addMarkerToMap = this.addMarkerToMap;
 			this.processBartStations.bind(googleMVContext);
 			googleMVContext.shouldShowMessage = this.shouldShowMessage;
-			setTimeout(this.processBartStations, 1)
+			setTimeout(this.processBartStations, 100)
 		}, this, "allStationList");
 
 		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page

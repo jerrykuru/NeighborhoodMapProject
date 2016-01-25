@@ -1,4 +1,7 @@
 <div class="row "  >
+	<div class="row " data-bind="visible: shouldShowMessage" >
+		<span class="error ">     Error : BRAT Station was not loaded </span>
+	</div>
 	<div data-bind="foreach: bartStations">
 		<div class="col-xs-12 col-sm-12 col-md-12" data-bind="click: $parent.selectedStation"><span class="list " data-bind="text: name"></span></div>
 	</div>

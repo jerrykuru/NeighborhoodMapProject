@@ -5,9 +5,10 @@ class LocationListViewModel {
 
 	constructor() {
 		this.bartStations = ko.observableArray();
+		this.shouldShowMessage = ko.observable(false);
 		this.loadBartStation(this.bartStations, this.publishStation);
 		this.filterList();
-		this.publishStation(this.bartStations);
+		this.publishStation(this.bartStations,this.shouldShowMessage);
 		//Refresh the list of BART Stations if the user make the search input box empty
 		ko.shouter.subscribe(function(stations) {
 			this.bartStations.removeAll();
@@ -27,7 +28,10 @@ class LocationListViewModel {
 	}
 
 	//Publish the list of station for the component "location-google-map " to subscribe 
-	publishStation(bartStations) {
+	publishStation(bartStations,shouldShowMessage) {
+        if(bartStations().length === 0){
+        	shouldShowMessage(true);
+        }
 		ko.shouter.notifySubscribers(bartStations, "allStationList");
 	}
 
@@ -72,11 +76,10 @@ class LocationListViewModel {
 			},
 			function(status) {
 				console.log(" you fail this time");
-				alert("Sorry can't load list of BART Stations");
+				publishStation(bartStations());
 			},
 			function(status) {
 				console.log("Not Sure=");
-				alert("Sorry can't load list of BART Stations");
 			}
 		);
 	}

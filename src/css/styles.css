@@ -38,6 +38,10 @@ border-left-width: 2px;
 padding-left: 2px;
 }
 
+.error{
+border-left-width:2px;
+padding-left: 18px;
+}
 
 
 @media all and (min-width: 960px) {
