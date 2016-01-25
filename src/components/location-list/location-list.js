@@ -29,7 +29,6 @@ class LocationListViewModel {
 
 	//Publish the list of station for the component "location-google-map " to subscribe 
 	publishStation(bartStations, shouldShowMessage) {
-		console.log("bartStations.length", bartStations.length);
 		if (bartStations.length === 0) {
 			shouldShowMessage(true);
 		} else {
@@ -75,6 +74,7 @@ class LocationListViewModel {
 				bartStations.push.apply(bartStations, status);
 				//store the resultset to local storage
 				localStorage.stations = JSON.stringify(bartStations());
+				console.log("bartStations()",bartStations());
 				publishStation(bartStations(), shouldShowMessage);
 			},
 			function(status) {
