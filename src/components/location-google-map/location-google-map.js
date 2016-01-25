@@ -5,37 +5,10 @@ class LocationGoogleMapViewModel {
 
 
 	constructor() {
-		this.percentage = ko.observable(0);
-        this.timeoutID = this.timer(this.percentage);
-		this.percentage.subscribe(function(value) {
-			if (parseInt(value) === 100) {
-				clearTimeout(this.timeoutID);
-			}
-		},this);
-
-		ko.bindingHandlers.progressBar = {
-			init: function(element) {
-				return {
-					controlsDescendantBindings: true
-				};
-			},
-			update: function(element, valueAccessor, bindingContext) {
-				var options = ko.unwrap(valueAccessor());
-
-				var value = options.value();
-
-				var width = value + "%";
-
-				$(element).addClass("progressBar");
-
-				ko.applyBindingsToNode(element, {
-					html: '<div data-bind="style: { width: \'' + width + '\' }"></div><div class="progressText" data-bind="text: \'' + value + ' %\'"></div>'
-				});
-
-				ko.applyBindingsToDescendants(bindingContext, element);
-			}
-		};
-
+		this.shouldShowMessage = ko.observable(false);
+		if (window.google === undefined) {
+			this.shouldShowMessage = ko.observable(true);
+		}
 		// Subsribe to first loading of all BART Stations, so the markers can be rendered on the page
 		// Added timeout to ensure that google maps were laoded, this is tech debt. 
 		ko.shouter.subscribe(function(bartStations) {
@@ -44,7 +17,7 @@ class LocationGoogleMapViewModel {
 			googleMVContext.bartStations = bartStations;
 			googleMVContext.addMarkerToMap = this.addMarkerToMap;
 			this.processBartStations.bind(googleMVContext);
-			googleMVContext.googleErrorMsg = this.googleErrorMsg;
+			googleMVContext.shouldShowMessage = this.shouldShowMessage;
 			setTimeout(this.processBartStations, 1)
 		}, this, "allStationList");
 
@@ -66,6 +39,11 @@ class LocationGoogleMapViewModel {
 	processBartStations() {
 		bartStations = googleMVContext.bartStations;
 		markers.forEach(googleMVContext.clearAllMarkers);
+		if (window.google === undefined) {
+			return;
+		}else{
+			googleMVContext.shouldShowMessage(false);
+		}
 		bartStations.forEach(googleMVContext.addMarkerToMap);
 	}
 
@@ -86,6 +64,7 @@ class LocationGoogleMapViewModel {
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
 		var nameOfStation = stations[stationIndex].name;
+
 		var infowindow = new google.maps.InfoWindow({
 			content: nameOfStation
 		});
@@ -103,6 +82,7 @@ class LocationGoogleMapViewModel {
 		this.name = item.name;
 		this.lat = ko.observable(item.location.lat);
 		this.long = ko.observable(item.location.lng);
+		
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(item.location.lat, item.location.lng),
 			title: name,
@@ -144,13 +124,7 @@ class LocationGoogleMapViewModel {
 
 	}
 
-	timer(percentage) {
-		timeoutID = setInterval(function() {
-			percentage(percentage() + 1);
-		}, 50);
 
-		return timeoutID;
-	}
 
 }
 

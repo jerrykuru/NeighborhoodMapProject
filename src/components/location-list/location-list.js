@@ -72,9 +72,11 @@ class LocationListViewModel {
 			},
 			function(status) {
 				console.log(" you fail this time");
+				alert("Sorry can't load list of BART Stations");
 			},
 			function(status) {
 				console.log("Not Sure=");
+				alert("Sorry can't load list of BART Stations");
 			}
 		);
 	}

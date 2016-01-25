@@ -65,7 +65,7 @@ gulp.task('js:babel', function() {
 gulp.task('js:optimize', ['js:babel'], function() {
     var config = objectAssign({}, requireJsOptimizerConfig, { baseUrl: 'temp' });
     return rjs(config)
-        .pipe(uglify({ preserveComments: 'some' }))
+      //  .pipe(uglify({ preserveComments: 'some' }))
         .pipe(gulp.dest('./dist/'));    
 })
 

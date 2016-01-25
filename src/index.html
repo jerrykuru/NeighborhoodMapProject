@@ -38,12 +38,15 @@
   var markers = [];
   var openedInfoWindow = null;
   function initMap() {
-  map = new google.maps.Map(document.getElementById('map_canvas'),
-  { center: {lat: 37.78, lng: -122.41},zoom: 10,mapTypeId: google.maps.MapTypeId.ROADMAP }
-  );
+    map = new google.maps.Map(document.getElementById('map_canvas'),
+     { center: {lat: 37.78, lng: -122.41},zoom: 10,mapTypeId: google.maps.MapTypeId.ROADMAP }
+     );
   };
+  function googleError() {
+    alert("Sorry can't load google map");
+  }
    
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDx5SksOhRVLAwWfXz2bSE0c5ybwwvOT4&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDx5SksOhRVLAwWfXz2bSE0c5ybwwvOT4&callback=initMap" onerror="googleError()"></script>
 </body>
 </html>
