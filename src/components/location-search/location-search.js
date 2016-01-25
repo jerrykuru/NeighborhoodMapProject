@@ -8,6 +8,7 @@ from 'app/constants.js'
 class LocationSearchViewModel {
 	constructor() {
 		this.searchStation = ko.observable(stationPlaceholder);
+
 		this.searchStation.subscribe(function(newValue) {
 			if (newValue.length === 0) {
 				var bartStations = JSON.parse(localStorage.stations);
@@ -18,6 +19,11 @@ class LocationSearchViewModel {
 		});
 
 	}
+
+	clearValue()  {   
+	   console.log("got called");    
+       this.searchStation('');   
+    }
 
 }
 
