@@ -6,9 +6,9 @@ class LocationListViewModel {
 	constructor() {
 		this.bartStations = ko.observableArray();
 		this.shouldShowMessage = ko.observable(false);
-		this.loadBartStation(this.bartStations, this.publishStation);
+		this.loadBartStation(this.bartStations, this.publishStation, this.shouldShowMessage);
 		this.filterList();
-		this.publishStation(this.bartStations,this.shouldShowMessage);
+		this.publishStation(this.bartStations, this.shouldShowMessage);
 		//Refresh the list of BART Stations if the user make the search input box empty
 		ko.shouter.subscribe(function(stations) {
 			this.bartStations.removeAll();
@@ -28,10 +28,13 @@ class LocationListViewModel {
 	}
 
 	//Publish the list of station for the component "location-google-map " to subscribe 
-	publishStation(bartStations,shouldShowMessage) {
-        if(bartStations().length === 0){
-        	shouldShowMessage(true);
-        }
+	publishStation(bartStations, shouldShowMessage) {
+		console.log("bartStations.length", bartStations.length);
+		if (bartStations.length === 0) {
+			shouldShowMessage(true);
+		} else {
+			shouldShowMessage(false);
+		}
 		ko.shouter.notifySubscribers(bartStations, "allStationList");
 	}
 
@@ -66,13 +69,13 @@ class LocationListViewModel {
 	}
 
 	// JQUERY Promise to handle aync loading of data 
-	loadBartStation(bartStations, publishStation) {
+	loadBartStation(bartStations, publishStation, shouldShowMessage) {
 		$.when(this.loadBratStationData()).then(
 			function(status) {
 				bartStations.push.apply(bartStations, status);
 				//store the resultset to local storage
 				localStorage.stations = JSON.stringify(bartStations());
-				publishStation(bartStations());
+				publishStation(bartStations(), shouldShowMessage);
 			},
 			function(status) {
 				console.log(" you fail this time");
