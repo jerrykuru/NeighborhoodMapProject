@@ -4,11 +4,13 @@ import locationListTemplate from 'text!./location-list.html';
 class LocationListViewModel {
 
 	constructor() {
+
 		this.bartStations = ko.observableArray();
 		this.shouldShowMessage = ko.observable(false);
 		this.loadBartStation(this.bartStations, this.publishStation, this.shouldShowMessage);
-		this.filterList();
+		this.filterList(this.bartStations, this.publishFiltredStation);
 		this.publishStation(this.bartStations, this.shouldShowMessage);
+
 		//Refresh the list of BART Stations if the user make the search input box empty
 		ko.shouter.subscribe(function(stations) {
 			this.bartStations.removeAll();
@@ -47,23 +49,27 @@ class LocationListViewModel {
 	// iterate over the BART collection and remove all the stations that does not match the input value from search. 
 	// Once the list is filtered , the list is published to the component "location-google-map " to render the filtered markers
 	// one the page
-	filterList() {
+	filterList(bartStations, publishFiltredStation) {
 		ko.shouter.subscribe(function(newValue) {
-			this.bartStations.removeAll();
+			bartStations.removeAll();
 			var stations = JSON.parse(localStorage.stations);
-			this.bartStations().push.apply(this.bartStations(), stations);
+			bartStations().push.apply(bartStations(), stations);
 			//Iterating over the stations , convert the search string to lowercase , 
 			//convert the station in the collection to lower case. Any hit will be included in the list view. 
-			this.bartStations.remove(function(item) {
+			bartStations.remove(function(item) {
 				var stationName = item.name;
 				var newValueLowerCase = newValue.toLocaleLowerCase();
 				var lowerCaseCompare = stationName.toLocaleLowerCase().indexOf(newValueLowerCase);
-				var finalResult = (lowerCaseCompare > -1);
-				return !finalResult;
+				var finalResult = false;
+				if (lowerCaseCompare === -1) {
+					finalResult = true;
+				};
+				return finalResult;
 			});
-			this.publishFiltredStation(this.bartStations);
-
-
+			// Had to do this to trigger the observal of Array
+			bartStations.push(bartStations()[0]);
+			bartStations.pop();
+			publishFiltredStation(bartStations());
 		}, this, "filteredStationInSearch");
 	}
 
@@ -74,7 +80,6 @@ class LocationListViewModel {
 				bartStations.push.apply(bartStations, status);
 				//store the resultset to local storage
 				localStorage.stations = JSON.stringify(bartStations());
-				console.log("bartStations()",bartStations());
 				publishStation(bartStations(), shouldShowMessage);
 			},
 			function(status) {

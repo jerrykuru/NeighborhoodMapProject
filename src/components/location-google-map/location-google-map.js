@@ -24,7 +24,7 @@ class LocationGoogleMapViewModel {
 		//Subsribe to the filtered list of BART Stations , so only the selected markers are visible on the page
 		ko.shouter.subscribe(function(bartStations) {
 			markers.forEach(this.clearAllMarkers);
-			bartStations().forEach(this.addMarkerToMap);
+			bartStations.forEach(this.addMarkerToMap);
 		}, this, "filteredStation");
 
 		// Subsribe to the click event selection, to show the animation effect on the page
@@ -72,7 +72,7 @@ class LocationGoogleMapViewModel {
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 		window.setTimeout(function() {
 			marker.setAnimation(null);
-		}, 300);
+		}, 1000);
 		localStorage.currentClickedStationIndex = stationIndex;
 		infowindow.open(map, marker);
 		openedInfoWindow = infowindow;
