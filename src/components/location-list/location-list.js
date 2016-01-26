@@ -17,8 +17,9 @@ class LocationListViewModel {
 			var stationsobservableArray = this.bartStations;
 			stationsobservableArray().push.apply(stationsobservableArray(), stations);
 			this.bartStations = stationsobservableArray;
-			// Had to do this to trigger the observal of Array
+			// Had to do this to trigger the Observable of Array
 			this.bartStations.push(stations[0]);
+			this.bartStations.pop();
 			ko.shouter.notifySubscribers(this.bartStations(), "allStationList");
 		}, this, "allStationListRefresh");
 
@@ -66,7 +67,7 @@ class LocationListViewModel {
 				};
 				return finalResult;
 			});
-			// Had to do this to trigger the observal of Array
+			// Had to do this to trigger the Observable of Array
 			bartStations.push(bartStations()[0]);
 			bartStations.pop();
 			publishFiltredStation(bartStations());
@@ -84,7 +85,7 @@ class LocationListViewModel {
 			},
 			function(status) {
 				console.log(" you fail this time");
-				publishStation(bartStations());
+				publishStation(bartStations(),shouldShowMessage);
 			},
 			function(status) {
 				console.log("Not Sure=");

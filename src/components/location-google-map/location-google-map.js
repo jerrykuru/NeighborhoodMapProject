@@ -72,7 +72,7 @@ class LocationGoogleMapViewModel {
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 		window.setTimeout(function() {
 			marker.setAnimation(null);
-		}, 1000);
+		}, 2000);
 		localStorage.currentClickedStationIndex = stationIndex;
 		infowindow.open(map, marker);
 		openedInfoWindow = infowindow;
