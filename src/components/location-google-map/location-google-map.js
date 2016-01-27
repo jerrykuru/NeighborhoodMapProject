@@ -41,7 +41,7 @@ class LocationGoogleMapViewModel {
 		markers.forEach(googleMVContext.clearAllMarkers);
 		if (window.google === undefined) {
 			return;
-		}else{
+		} else {
 			googleMVContext.shouldShowMessage(false);
 		}
 		bartStations.forEach(googleMVContext.addMarkerToMap);
@@ -63,16 +63,16 @@ class LocationGoogleMapViewModel {
 		}
 		var marker = markers[stationIndex];
 		var stations = JSON.parse(localStorage.stations);
-		var nameOfStation = stations[stationIndex].name;
-
-		var infowindow = new google.maps.InfoWindow({
-			content: nameOfStation
-		});
+		var item = stations[stationIndex];
+        var infowindow = new google.maps.InfoWindow();
+		infowindow.setContent('<div><strong>' + item.name + '</strong><br>Address' + item.location.formattedAddress + 
+			'<br>PhoneNumber : '+ item.contact.formattedPhone + '</div>');
+		 
 
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 		window.setTimeout(function() {
 			marker.setAnimation(null);
-		}, 2000);
+		}, 3000);
 		localStorage.currentClickedStationIndex = stationIndex;
 		infowindow.open(map, marker);
 		openedInfoWindow = infowindow;
@@ -82,7 +82,7 @@ class LocationGoogleMapViewModel {
 		this.name = item.name;
 		this.lat = ko.observable(item.location.lat);
 		this.long = ko.observable(item.location.lng);
-		
+
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(item.location.lat, item.location.lng),
 			title: name,
@@ -90,10 +90,10 @@ class LocationGoogleMapViewModel {
 			draggable: true
 		});
 
-		var infowindow = new google.maps.InfoWindow({
-			content: name
-		});
-
+		var infowindow = new google.maps.InfoWindow();
+		infowindow.setContent('<div><strong>' + item.name + '</strong><br>Address' + item.location.formattedAddress +
+		 '<br>PhoneNumber : '+ item.contact.formattedPhone + '</div>');
+		
 		google.maps.event.addListener(marker, 'click', function() {
 			if (marker.getAnimation() !== null) {
 				marker.setAnimation(null);
@@ -105,7 +105,7 @@ class LocationGoogleMapViewModel {
 				infowindow.open(map, marker);
 				window.setTimeout(function() {
 					marker.setAnimation(null);
-				}, 700);
+				}, 1000);
 				openedInfoWindow = infowindow;
 			}
 		}.bind(this));
@@ -123,8 +123,6 @@ class LocationGoogleMapViewModel {
 		markers.push(marker);
 
 	}
-
-
 
 }
 
